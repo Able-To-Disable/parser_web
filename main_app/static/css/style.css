@@ -1,0 +1,50 @@
+.button {
+    font-family: "Cheltenham", Georgia, serif; 
+    font-size: 1rem; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    padding: 10px 20px; 
+    border: 1px solid #ccc; 
+    background-color: #fff; 
+    color: #333; 
+    cursor: pointer; 
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+
+
+.button:hover {
+    background-color: #333; 
+    color: #fff; /
+}
+
+
+.button:focus {
+    outline: none; 
+    box-shadow: 0 0 0 2px #333; 
+}
+
+h1, h2, h3 {
+    font-family: "Cheltenham", Georgia, serif; 
+    font-size: 2.5rem; 
+    font-weight: bold; 
+    line-height: 1.2; 
+    color: #333;
+    margin-bottom: 20px; 
+}
+
+.title {
+    font-family: "Cheltenham", Georgia, serif; 
+    font-size: 1.3rem; 
+    font-weight: bold; 
+    line-height: 1.2; 
+    color: #333;
+    margin-bottom: 20px; 
+}
+
+.save-button {
+
+        background-color: #333; 
+        color: #fff; /
+    
+}

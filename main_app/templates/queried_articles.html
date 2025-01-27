@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Подборка новостей о {{ query|capfirst }}</h1>
+
+<style>
+    .border-right {
+        border-right: 1px solid #ccc; 
+        padding-right: 15px; 
+    }
+</style>
+
+<div class="row">
+    <div class="col s12 m4 border-right">
+        <h3>New York Times Articles</h3>
+        {% for article in nyt_articles %}
+        <div>
+            <div>
+                <span class="title"><a href="{{ article.web_url }}">{{ article.headline.main }}</a></span>
+                <p>{{ article.abstract }}</p>
+                <p style="display: inline-block;">{{ article.pub_date|slice:":10" }}</p>
+                {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'save_article' %}" style="display: inline-block; vertical-align: middle;">
+                    {% csrf_token %}
+                    <input type="hidden" name="web_url" value="{{ article.web_url }}">
+                    <input type="hidden" name="headline" value="{{ article.headline.main }}">
+                    <input type="hidden" name="pub_date" value="{{ article.pub_date }}">
+                    <button type="submit" style="background: none; border: none; display: inline-block; ">
+                        <i class="material-icons amber-text" style="vertical-align: text-top; margin-top: -7px; cursor: pointer;">check</i>
+                    </button>
+                </form>
+                {% endif %}
+            </div>    
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col s12 m4 border-right">
+        <h3>The Guardian Articles</h3>
+        {% for article in the_guardian_articles %}
+        <div>
+            <div>
+                <span class="title" style="display: inline-flex;"><a href="{{ article.webUrl }}">{{ article.webTitle }}</a></span>
+                <p style="display: inline-block;">{{ article.webPublicationDate|slice:":10" }}</p>
+                {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'save_article' %}" style="display: inline-block; vertical-align: middle;">
+                    {% csrf_token %}
+                    <input type="hidden" name="web_url" value="{{ article.webUrl }}">
+                    <input type="hidden" name="headline" value="{{ article.webTitle }}">
+                    <input type="hidden" name="pub_date" value="{{ article.webPublicationDate }}">
+                    <button type="submit" style="background: none; border: none; display: inline-block; ">
+                        <i class="material-icons amber-text" style="vertical-align: text-top; margin-top: -7px; cursor: pointer;">check</i>
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col s12 m4">
+        {% if democracy_now_articles %}
+        <h3>Democracy Now! Recent articles on {{ query|capfirst }}</h3>
+        {% for article in democracy_now_articles %}
+        <div>
+            <div>
+                <span class="title" style="display: inline-flex;"><a href="{{ article.url }}">{{ article.title }}</a></span>
+                <p style="display: inline-block;">{{ article.date }}</p>
+                {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'save_article' %}" style="display: inline-block; vertical-align: middle;">
+                    {% csrf_token %}
+                    <input type="hidden" name="web_url" value="{{ article.url }}">
+                    <input type="hidden" name="headline" value="{{ article.title }}">
+                    <input type="hidden" name="pub_date" value="{{ article.date }}">
+                    <button type="submit" style="background: none; border: none; display: inline-block; ">
+                        <i class="material-icons amber-text" style="vertical-align: text-top; margin-top: -7px; cursor: pointer;">check</i>
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h3 style="font-size: 23px;">No Articles found on Democracy Now! with the topic {{query|capfirst }} </h3>
+        {% endif %}
+    </div>
+</div>
+
+
+
+{% endblock %}

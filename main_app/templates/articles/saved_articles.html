@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    <h1> Сохраненные новости </h1>
+</div>
+<div>
+    {% for article in articles %}
+    <ul>
+        <li><a class="title" href="{{ article.link }}">{{ article.headline }}</a></li>
+        <li>Дата публикации: {{ article.date }}</li>
+    </ul>
+        <form action="{% url 'add_tag' article.id %}" method="POST" class="small-input-form">
+            {% csrf_token %}
+            {{ tag_form.as_p }}
+            <input type="submit" class="button" value="Добавить заметку">
+        </form>
+        <div>
+            {% if article.tags.all %}
+                <div style="display: inline-block;">
+                    {% for tag in article.tags.all %}
+                        <div style="display: inline-block; margin-right: 10px;">
+                            <a href="{% url 'show_tag' tag.id %}">{{ tag.name }}</a>
+                            <a href="{% url 'delete_tag' article.id tag.id %}">
+                                <i class="material-icons grey-text" style="vertical-align: middle;">delete</i>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+</div>
+{% endfor %}
+
+<script>
+
+    const selectEl = document.getElementById('id_name');
+    console.log(selectEl);
+    M.FormSelect.init(selectEl);
+</script>
+
+
+{% endblock %}
